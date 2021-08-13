@@ -36,7 +36,7 @@ ClearWeapons = function()
 	end
 	RemoveAllPedWeapons(ESX.PlayerData.ped, true)
 	if parachute then
-		local chute = `GADGET_PARACHUTE`
+		local chute = "GADGET_PARACHUTE"
 		GiveWeaponToPed(ESX.PlayerData.ped, chute, 0, true, false)
 		SetPedGadget(ESX.PlayerData.ped, chute, true)
 	end
@@ -1186,20 +1186,24 @@ UseItem = function(item, esxItem, data)
 					bone = data.anim and data.anim.bone or nil,
 				}
 				local prop = data.prop or {}
-				exports['mythic_progbar']:Progress({
-					name = 'useitem',
-					duration = data.usetime,
-					label = 'Using '..xItem.label,
-					useWhileDead = false,
-					canCancel = false,
-					controlDisables = { disableMovement = disable.move, disableCarMovement = disable.car, disableMouse = disable.mouse, disableCombat = disable.combat },
-					animation = { animDict = anim.dict, anim = anim.clip, flags = anim.flag, bone = anim.bone },
-					prop = prop
-				}, function(status)
-					if status then
-						cancelled = true
-					end
-				end)
+				if item.name:find('user_') then
+				else
+					exports['mythic_progbar']:Progress({
+						name = 'useitem',
+						duration = data.usetime,
+						label = 'Using '..xItem.label,
+						useWhileDead = false,
+						canCancel = false,
+						controlDisables = { disableMovement = disable.move, disableCarMovement = disable.car, disableMouse = disable.mouse, disableCombat = disable.combat },
+						animation = { animDict = anim.dict, anim = anim.clip, flags = anim.flag, bone = anim.bone },
+						prop = prop
+					}, function(status)
+						if status then
+							cancelled = true
+						end
+					end)
+				end
+
 			end
 			Citizen.Wait(data.usetime)
 			if not cancelled then
@@ -1225,3 +1229,18 @@ UseItem = function(item, esxItem, data)
 end
 
 if ESX.IsPlayerLoaded() then StartInventory() end
+
+function tprint (tbl, indent)
+	if not indent then indent = 0 end
+	for k, v in pairs(tbl) do
+	  formatting = string.rep("  ", indent) .. k .. ": "
+	  if type(v) == "table" then
+		print(formatting)
+		tprint(v, indent+1)
+	  elseif type(v) == 'boolean' then
+		print(formatting .. tostring(v))      
+	  else
+		print(formatting .. v)
+	  end
+	end
+end

@@ -100,7 +100,7 @@ Citizen.CreateThread(function()
 				local ped = GetPlayerPed(data.id)
 				if ped then
 					local hash, curWeapon = GetSelectedPedWeapon(ped)
-					if hash ~= `WEAPON_UNARMED` and not ignore[hash] then
+					if hash ~= "WEAPON_UNARMED" and not ignore[hash] then
 						curWeapon = ESX.GetWeaponFromHash(hash)
 						if curWeapon then
 							if Items[curWeapon.name] then
@@ -180,6 +180,8 @@ AddEventHandler('linden_inventory:setPlayerInventory', function(xPlayer, data)
 				else weight = xItem.weight end
 				if not v.metadata then v.metadata = {} end
 				if v.metadata.weight then weight = weight + v.metadata.weight end
+				if v.metadata.label then xItem.label = v.metadata.label end
+				if v.metadata.description then xItem.description = v.metadata.description end
 				totalWeight = totalWeight + weight
 				inventory[v.slot] = {name = v.name, label = xItem.label, weight = weight, slot = v.slot, count = v.count, description = xItem.description, metadata = v.metadata, stack = xItem.stack}
 			end

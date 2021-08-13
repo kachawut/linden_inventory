@@ -45,7 +45,7 @@ addInventoryItem = function(xPlayer, item, count, metadata, slot)
 		local toSlot, existing
 		if slot then slot = getPlayerSlot(xPlayer, slot, item, metadata).slot
 		else
-			for i=1, Config.PlayerSlots do
+			for i=6, Config.PlayerSlots do
 				if xItem.stack and Inventories[xPlayer.source].inventory[i] and Inventories[xPlayer.source].inventory[i].name == item and func.matchtables(Inventories[xPlayer.source].inventory[i].metadata, metadata) then toSlot = i existing = true break
 				elseif not toSlot and Inventories[xPlayer.source].inventory[i] == nil then toSlot = i existing = false end
 			end
@@ -81,8 +81,9 @@ addInventoryItem = function(xPlayer, item, count, metadata, slot)
 				count = 1
 				metadata = {}
 				metadata.bag = GenerateText(3)..os.time(os.date("!*t"))
+			elseif item:find('user_') then
+				xItem.label = metadata.label
 			end
-
 			local added = count
 			if existing then count = Inventories[xPlayer.source].inventory[slot].count + count end
 			Inventories[xPlayer.source].inventory[slot] = {name = item, label = xItem.label, weight = xItem.weight, slot = slot, count = count, description = xItem.description, metadata = metadata or {}, stack = xItem.stack, close = xItem.close}
