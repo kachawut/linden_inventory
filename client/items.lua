@@ -95,7 +95,7 @@ AddEventHandler('linden_inventory:parachute', function(item, wait, cb)
 		cb(true)
 		SetTimeout(wait, function()
 			if not cancelled then
-				local chute = `GADGET_PARACHUTE`
+				local chute = "GADGET_PARACHUTE"
 				GiveWeaponToPed(ESX.PlayerData.ped, chute, 0, true, false)
 				SetPedGadget(ESX.PlayerData.ped, chute, true)
 				ESX.Streaming.RequestModel(1269906701)
@@ -104,3 +104,146 @@ AddEventHandler('linden_inventory:parachute', function(item, wait, cb)
 		end)
 	else cb(false) end
 end)
+
+AddEventHandler('linden_inventory:user_helmet', function(item, wait, cb)
+	cb(true)
+	local playerPed = PlayerPedId()
+	local default = {texture=-1,prop_id=0,drawable=-1}
+	local appearance = exports['fivem-appearance']:getPedProps(playerPed)
+	local dict = "veh@bicycle@roadfront@base"
+	local anim = "put_on_helmet"
+	local props = nil
+	ClearPedTasks(playerPed)
+	for key, value in pairs(appearance) do
+		if value.prop_id == 0 then
+			if value.drawable == item.metadata.props.drawable then
+				props = default
+				dict = "missheist_agency2ahelmet"
+				anim = "take_off_helmet_stand"
+			else
+				props = item.metadata.props
+			end
+		end
+	end
+	setPedPlayerProps(item, wait, dict, anim, props)
+end)
+
+AddEventHandler('linden_inventory:user_glasses', function(item, wait, cb)
+	cb(true)
+	local playerPed = PlayerPedId()
+	local default = {texture=-1,prop_id=1,drawable=-1}
+	local appearance = exports['fivem-appearance']:getPedProps(playerPed)
+	local dict = "clothingspecs"
+	local anim = "try_glasses_positive_a"
+	local props = nil
+	ClearPedTasks(playerPed)
+	for key, value in pairs(appearance) do
+		if value.prop_id == 1 then
+			if value.drawable == item.metadata.props.drawable then
+				props = default
+				anim = "take_off"
+			else
+				props = item.metadata.props
+			end
+		end
+	end
+	setPedPlayerProps(item, wait, dict, anim, props)
+end)
+
+AddEventHandler('linden_inventory:user_ear', function(item, wait, cb)
+	cb(true)
+	local playerPed = PlayerPedId()
+	local default = { texture = -1, prop_id = 2, drawable = -1 }
+	local appearance = exports['fivem-appearance']:getPedProps(playerPed)
+	local dict = "mp_cp_stolen_tut"
+	local anim = "b_think"
+	local props = nil
+	ClearPedTasks(playerPed)
+	for key, value in pairs(appearance) do
+		if value.prop_id == 2 then
+			if value.drawable == item.metadata.props.drawable then
+				props = default
+			else
+				props = item.metadata.props
+			end
+		end
+	end
+	setPedPlayerProps(item, wait, dict, anim, props)
+end)
+
+AddEventHandler('linden_inventory:user_watches', function(item, wait, cb)
+	cb(true)
+	local playerPed = PlayerPedId()
+	local default = { texture = -1, prop_id = 6, drawable = -1 }
+	local appearance = exports['fivem-appearance']:getPedProps(playerPed)
+	local dict = "nmt_3_rcm-10"
+	local anim = "cs_nigel_dual-10"
+	local props = nil
+	ClearPedTasks(playerPed)
+	for key, value in pairs(appearance) do
+		if value.prop_id == 6 then
+			if value.drawable == item.metadata.props.drawable then
+				props = default
+			else
+				props = item.metadata.props
+			end
+		end
+	end
+	setPedPlayerProps(item, wait, dict, anim, props)
+end)
+
+AddEventHandler('linden_inventory:user_bracelets', function(item, wait, cb)
+	cb(true)
+	local playerPed = PlayerPedId()
+	local default = { texture = -1, prop_id = 7, drawable = -1 }
+	local appearance = exports['fivem-appearance']:getPedProps(playerPed)
+	local dict = "nmt_3_rcm-10"
+	local anim = "cs_nigel_dual-10"
+	local props = nil
+	ClearPedTasks(playerPed)
+	for key, value in pairs(appearance) do
+		if value.prop_id == 7 then
+			if value.drawable == item.metadata.props.drawable then
+				props = default
+			else
+				props = item.metadata.props
+			end
+		end
+	end
+	setPedPlayerProps(item, wait, dict, anim, props)
+end)
+
+setPedPlayerProps = function (item, wait, dict, anim, props)
+	exports['mythic_progbar']:Progress({
+		name = 'useitem',
+		duration = wait,
+		label = 'กำลังใช้ '..item.label,
+		useWhileDead = false,
+		canCancel = false,
+		controlDisables = { disableMovement = true, disableCarMovement = false, disableMouse = false, disableCombat = false },
+		animation = { animDict = dict, anim = anim, flags = 48, bone = nil },
+	}, function(status)
+		if status then
+			cancelled = true
+		end
+	end)
+	SetTimeout(wait+200, function()
+		exports['fivem-appearance']:setPedProp(PlayerPedId(), props)
+		ClearPedTasks(PlayerPedId())
+	end)
+end
+
+function tprint (tbl, indent)
+	if not indent then indent = 0 end
+	for k, v in pairs(tbl) do
+	  formatting = string.rep("  ", indent) .. k .. ": "
+	  if type(v) == "table" then
+		print(formatting)
+		tprint(v, indent+1)
+	  elseif type(v) == 'boolean' then
+		print(formatting .. tostring(v))      
+	  else
+		print(formatting .. v)
+	  end
+	end
+end

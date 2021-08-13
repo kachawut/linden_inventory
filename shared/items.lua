@@ -159,4 +159,64 @@ Items = {
 		}
 	},
 
+	['user_helmet'] = {
+		label = 'Helmet',
+		description = 'หมวกที่คุณซื้อไว้',
+		weight = 190,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			usetime = 1000,
+			event = true
+		}
+	},
+	['user_glasses'] = {
+		label = 'Glasses',
+		description = 'แว่นตาที่คุณซื้อไว้',
+		weight = 190,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			usetime = 1000,
+			event = true
+		}
+	},
+	['user_ear'] = {
+		label = 'Ear',
+		description = 'ต่างหูที่คุณซื้อไว้',
+		weight = 190,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			usetime = 1000,
+			event = true
+		}
+	},
+	['user_watches'] = {
+		label = 'Watches',
+		description = 'นาฬิกาข้อมือที่คุณซื้อไว้',
+		weight = 190,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			usetime = 1000,
+			event = true
+		}
+	},
+	['user_bracelets'] = {
+		label = 'Bracelets',
+		description = 'กำไลข้อมือที่คุณซื้อไว้',
+		weight = 190,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			usetime = 1000,
+			event = true
+		}
+	},
 }

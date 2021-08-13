@@ -1,6 +1,6 @@
 Keybind = {
 	Primary = 'F2',
-	Secondary = 'K',
+	Secondary = 'F3',
 	Hotbar = 'TAB'
 }
 
@@ -20,13 +20,13 @@ Config.DBCleanup = '6 MONTH'
 Config.PlayerSlots = 50
 
 -- If vehicle plates are stored with a trailing space, set to false (i.e. `XXX 000 `)
-Config.TrimPlate = true
+Config.TrimPlate = false
 
 -- Blur the screen while in an inventory
 Config.EnableBlur = true
 
 -- Requires esx_licenses
-Config.WeaponsLicense = true
+Config.WeaponsLicense = false
 Config.WeaponsLicensePrice = 5000
 
 -- Set to true to enable integrated logging (extra configuration in server/logs)
@@ -40,3 +40,4 @@ Config.RandomPrices = false
 
 -- Adds compatibility for qtarget (https://github.com/QuantusRP/qtarget)
 Config.qtarget = false
+
